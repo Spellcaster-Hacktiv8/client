@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Alert, Button } from "react-native";
+import { StyleSheet, View, Text, Alert, Button, ActivityIndicator } from "react-native";
 import MapView, { AnimatedRegion, Animated } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import axios from 'axios'
 import Geocoder from 'react-native-geocoding'
 
-Geocoder.init("AIzaSyARYJ1PEjq9z8K3TVlPxY2Ib52-PTLTZ7A")
-
-
-
+let positionNow;
+navigator.geolocation.getCurrentPosition(position => {
+  positionNow = position.coords.latitude + ',' + position.coords.longitude
+})
 export default function MapScreen() {
-  const [currentLocation, setCurrentLocation] = useState('-6.206726966135964,107.00868818131161')
+
+  const [currentLocation, setCurrentLocation] = useState(positionNow)
+  const [loading, setLoading] = useState(false)
   const [hospitals, setHospitals] = useState([])
   // const [latDestination, setLatDestination] = useState(-6.2260)
   // const [lngDestination, setLngDestination] = useState(107.0011)
@@ -20,19 +22,22 @@ export default function MapScreen() {
   // let details
   // console.log(hospitals)
   useEffect(() => {
-    getPosition()
-      .then(({ data }) => {
-        setCurrentLocation(data.lat + ',' + data.long)
-        return fetchNearHospital(currentLocation)
-      })
+    if (currentLocation)
+      setLoading(true)
+    fetchNearHospital(currentLocation)
       .then(({ data }) => {
         const { results } = data
         setHospitals(results)
       })
       .catch(err => console.log(err))
+      .finally(() => setLoading(false))
   }, [currentLocation])
-  return (
+  return (<>
+    {
+      loading ? (<View><ActivityIndicator size="small" color="#00ff00" /></View>) : <></>
+    }
     <View style={styles.container}>
+
       <MapView style={styles.map}
         initialRegion={{
           latitude: +currentLocation.split(",")[0],
@@ -68,6 +73,7 @@ export default function MapScreen() {
 
       </MapView>
     </View >
+  </>
   );
 }
 
@@ -101,8 +107,3 @@ const fetchDetailHospital = async (place_id) => {
   console.log({ international_phone_number })
 }
 
-// console.log(fetchDetailHospital("ChIJPWppQ7qOaS4Rn9vOEFhFqH4"))
-
-function getPosition() {
-  return axios.get("http://localhost:3000/location")
-}
