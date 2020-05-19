@@ -8,7 +8,7 @@ export default function LandingScreen({ navigation }) {
     <>
       <View style={styles.container}>
         <View style={styles.containerone}>
-          <ImageBackground source={require("../assets/covid.png")} style={styles.imgBackgroundHome}></ImageBackground>
+          <ImageBackground source={require("../assets/splash.png")} style={styles.imgBackgroundHome}></ImageBackground>
        </View>
         <View style={styles.containertwo}>
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
