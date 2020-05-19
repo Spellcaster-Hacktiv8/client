@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Alert, Button, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Text, Alert, Button, ActivityIndicator, Image } from "react-native";
 import MapView, { AnimatedRegion, Animated } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import axios from 'axios'
 import Geocoder from 'react-native-geocoding'
 import RetroMapStyles from '../retro.json'
+
 
 let positionNow;
 navigator.geolocation.getCurrentPosition(position => {
@@ -56,7 +57,10 @@ export default function MapScreen() {
         {
           hospitals.map(hospital => (hospital.name.toLowerCase().includes("sakit") || hospital.name.toLowerCase().includes("rs") || hospital.name.toLowerCase().includes("hospital")) ?
             (
-              <MapView.Marker coordinate={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }} title={hospital.name} description={hospital.vicinity} key={hospital.id} />
+              <MapView.Marker coordinate={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }} title={hospital.name} description={hospital.vicinity} key={hospital.id}>
+
+              <Image source={require('../assets/hospital.png')} style={{height: 35, width:35 }} />
+              </MapView.Marker>
             ) : <></>)
         }
         {/* <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'My Location'} pinColor={"white"}  /> */}
@@ -72,8 +76,6 @@ export default function MapScreen() {
             strokeColor={'#ffa41b'}
           /> : <></>)
         }
-
-
 
       </MapView>
     </View >
