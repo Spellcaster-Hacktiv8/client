@@ -53,7 +53,13 @@ export default function MapScreen() {
         {
           hospitals.map(hospital => (hospital.name.toLowerCase().includes("sakit") || hospital.name.toLowerCase().includes("rs") || hospital.name.toLowerCase().includes("hospital")) ?
             (
-              <MapView.Marker coordinate={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }} title={hospital.name} description={hospital.vicinity} key={hospital.id} />
+              <MapView.Marker coordinate={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }} title={hospital.name} description={hospital.details} key={hospital.id} onPress={async () => {
+                const { data } = await fetchDetailHospital(hospital.place_id)
+                const { result } = data
+                const { international_phone_number } = result
+                hospital.details = international_phone_number
+                Alert.alert(hospital.details)
+              }} />
             ) : <></>)
         }
         <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'rumahsaya'} pinColor={"white"} />
@@ -100,10 +106,7 @@ function fetchNearHospital(currentLocation) {
   return axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${currentLocation}&radius=5000&type=hospital&key=AIzaSyAsbtF5SxylGRFRTSRwI6tcWRTSvJchYiM`)
 }
 
-const fetchDetailHospital = async (place_id) => {
-  let { data } = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=AIzaSyAsbtF5SxylGRFRTSRwI6tcWRTSvJchYiM`)
-  const { result } = data
-  const { international_phone_number } = result
-  console.log({ international_phone_number })
+const fetchDetailHospital = (place_id) => {
+  return axios.get(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${place_id}&key=AIzaSyAsbtF5SxylGRFRTSRwI6tcWRTSvJchYiM`)
 }
 
