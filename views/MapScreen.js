@@ -4,6 +4,7 @@ import MapView, { AnimatedRegion, Animated } from 'react-native-maps'
 import MapViewDirections from 'react-native-maps-directions'
 import axios from 'axios'
 import Geocoder from 'react-native-geocoding'
+import RetroMapStyles from '../retro.json'
 
 let positionNow;
 navigator.geolocation.getCurrentPosition(position => {
@@ -39,11 +40,13 @@ export default function MapScreen() {
     <View style={styles.container}>
 
       <MapView style={styles.map}
+        showsUserLocation={true}
+        customMapStyle={RetroMapStyles}
         initialRegion={{
           latitude: +currentLocation.split(",")[0],
           longitude: +currentLocation.split(",")[1],
           latitudeDelta: 0.2,
-          longitudeDelta: 0.2
+          longitudeDelta: 0.2,
         }}
         zoomControlEnabled={true}
 
@@ -56,16 +59,17 @@ export default function MapScreen() {
               <MapView.Marker coordinate={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }} title={hospital.name} description={hospital.vicinity} key={hospital.id} />
             ) : <></>)
         }
-        <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'rumahsaya'} pinColor={"white"} />
+        {/* <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'My Location'} pinColor={"white"}  /> */}
 
 
         {
-          hospitals.map(hospital => (hospital.name.toLowerCase().includes("sakit") || hospital.name.toLowerCase().includes("rs") || hospital.name.toLowerCase().includes("hospital")) ? <MapViewDirections
+          hospitals.map(hospital => (hospital.name.toLowerCase().includes("sakit") || hospital.name.toLowerCase().includes("rs") || hospital.name.toLowerCase().includes("hospital")) ? 
+          <MapViewDirections
             origin={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }}
             destination={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }}
             apikey={'AIzaSyBfRZ4teg55GyBfA7mtR-NlIDugDXYELSc'}
-            strokeWidth={3}
-            strokeColor={"blue"}
+            strokeWidth={4}
+            strokeColor={'#ffa41b'}
           /> : <></>)
         }
 
