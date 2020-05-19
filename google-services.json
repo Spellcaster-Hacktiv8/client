@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "989221422914",
+    "firebase_url": "https://amicovid-9c55a.firebaseio.com",
+    "project_id": "amicovid-9c55a",
+    "storage_bucket": "amicovid-9c55a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989221422914:android:792a44813b373b3a432adb",
+        "android_client_info": {
+          "package_name": "com.amicovid.amicovid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989221422914-th6gka6575e0i08plp8ub3cl4t8a8a4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM88CBEyPF1vGSbsVh7neuBGWZG_A7d4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989221422914-th6gka6575e0i08plp8ub3cl4t8a8a4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
