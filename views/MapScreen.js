@@ -63,7 +63,9 @@ export default function MapScreen() {
               </MapView.Marker>
             ) : <></>)
         }
-        {/* <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'My Location'} pinColor={"white"}  /> */}
+        <MapView.Marker coordinate={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }} title={'My Location'}> 
+        <Image source={require('../assets/pinme.png')} style={{height: 40, width:40, resizeMode: 'contain', zIndex:9999 }}   />
+        </MapView.Marker>
 
 
         {
