@@ -76,6 +76,7 @@ export default function MapScreen() {
         {
           hospitals.map(hospital => (hospital.name.toLowerCase().includes("sakit") || hospital.name.toLowerCase().includes("rs") || hospital.name.toLowerCase().includes("hospital")) ?
             <MapViewDirections
+            key={hospital.id}
               origin={{ latitude: +currentLocation.split(",")[0], longitude: +currentLocation.split(",")[1] }}
               destination={{ latitude: hospital.geometry.location.lat, longitude: hospital.geometry.location.lng }}
               apikey={'AIzaSyBfRZ4teg55GyBfA7mtR-NlIDugDXYELSc'}
